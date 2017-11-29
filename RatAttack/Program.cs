@@ -16,76 +16,89 @@ namespace RatAttack
 
         static void Main(string[] args)
         {
+            //enstinguished rat populations
             int[,] entinguishedRatCounts = new int[1025, 1025];
 
-            //Number of scenarios -test cases 
-            int scenariosCount = Convert.ToInt32(Console.ReadLine());
-
-            /*
-             * for each scenario, calculate the position (x,y) and sum of the rat poulation which will be extinguished
-             */
-
-            while (scenariosCount > 0)
+            try
             {
-                int gasBombStrength = Convert.ToInt32(Console.ReadLine());    //d
-                int ratPopulationCount = Convert.ToInt32(Console.ReadLine());  //n
-                int positionX = 0;
-                int positionY = 0;
-                int populationSize = 0;
+                //Number of scenarios -test cases 
+                int scenariosCount = Convert.ToInt32(Console.ReadLine());
 
-                //validateInput();
+                /*
+                 * for each scenario, calculate the position (x,y) and sum of the rat poulation which will be extinguished
+                 */
 
-                for (int i = 0; i < ratPopulationCount; i++)
+                while (scenariosCount > 0)
                 {
-                    string line = Console.ReadLine();
+                    //strength of gas bomb
+                    int gasBombStrength = Convert.ToInt32(Console.ReadLine());    //d
 
-                    //Split line input into array - sample input  10 10 7
-                    string[] values = line.Split(' ');
+                    //total rat population
+                    int ratPopulationCount = Convert.ToInt32(Console.ReadLine());  //n
 
-                    positionX = Convert.ToInt32(values[0]);  //x
-                    positionY = Convert.ToInt32(values[1]); //y
-                    populationSize = Convert.ToInt32(values[2]);   // i
+                    //initial position x and y and population size
+                    int positionX = 0;
+                    int positionY = 0;
+                    int populationSize = 0;
 
-                    //Calculate min and max values of X & Y 
-                    int minPositionX = Math.Max(0, positionX - gasBombStrength);
-                    int maxPositionX = Math.Min(positionX + gasBombStrength, 1024);
-                    int minPositionY = Math.Max(0, positionY - gasBombStrength);
-                    int maxPositionY = Math.Min(positionY + gasBombStrength, 1024);
+                    //validateInput();
 
-                    //Calculate the sum of rat populations that will be estinguished
-                    for (int j = minPositionX; j <= maxPositionX; j++)
+                    for (int i = 0; i < ratPopulationCount; i++)
                     {
-                        for (int k = minPositionY; k <= maxPositionY; k++)
-                            entinguishedRatCounts[j, k] += populationSize;
-                    }
-                }
+                        string line = Console.ReadLine();
 
-                //chosenX,chosenY --chosen location for the gas bomb.
-                //extinguishedRatsCount -number of rats that will be extinguished
+                        //Split line input into array - sample input  10 10 7
+                        string[] values = line.Split(' ');
 
-                int chosenX = 0, chosenY = 0, extinguishedRatsCount = -1;
+                        //get positions
+                        positionX = Convert.ToInt32(values[0]);  //x
+                        positionY = Convert.ToInt32(values[1]); //y
+                        populationSize = Convert.ToInt32(values[2]);   // i
 
-                //Get the maximum rat populationthat will be estinsguished
-                for (int l = 0; l < 1025; l++)
-                {
-                    for (int m = 0; m < 1025; m++)
-                    {
-                        if (extinguishedRatsCount < entinguishedRatCounts[l, m])
+                        //Calculate min and max values of X & Y 
+                        int minPositionX = Math.Max(0, positionX - gasBombStrength);
+                        int maxPositionX = Math.Min(positionX + gasBombStrength, 1024);
+                        int minPositionY = Math.Max(0, positionY - gasBombStrength);
+                        int maxPositionY = Math.Min(positionY + gasBombStrength, 1024);
+
+                        //Calculate the sum of rat populations that will be estinguished
+                        for (int j = minPositionX; j <= maxPositionX; j++)
                         {
-                            chosenY = m;
-                            chosenX = l;
-                            extinguishedRatsCount = entinguishedRatCounts[l, m];
-
+                            for (int k = minPositionY; k <= maxPositionY; k++)
+                                entinguishedRatCounts[j, k] += populationSize;
                         }
                     }
+
+                    //chosenX,chosenY --chosen location for the gas bomb.
+                    //extinguishedRatsCount -number of rats that will be extinguished
+
+                    int chosenX = 0, chosenY = 0, extinguishedRatsCount = -1;
+
+                    //Get the maximum rat populationthat will be estinsguished
+                    for (int l = 0; l < 1025; l++)
+                    {
+                        for (int m = 0; m < 1025; m++)
+                        {
+                            if (extinguishedRatsCount < entinguishedRatCounts[l, m])
+                            {
+                                chosenY = m;
+                                chosenX = l;
+                                extinguishedRatsCount = entinguishedRatCounts[l, m];
+
+                            }
+                        }
+                    }
+
+                    //Display output
+                    Console.WriteLine("\nOUTPUT");
+                    Console.WriteLine($"{chosenX} {chosenY} {extinguishedRatsCount}");
+
                 }
-
-                //Display output
-                Console.WriteLine("\nOUTPUT");
-                Console.WriteLine($"{chosenX} {chosenY} {extinguishedRatsCount}");
-
             }
-
+            catch (Exception ex)
+            {
+                Console.Write("An error occured....Ensure input data is valid");
+            }
 
             Console.ReadLine();
         }
