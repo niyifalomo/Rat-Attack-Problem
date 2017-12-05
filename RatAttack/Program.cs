@@ -17,7 +17,7 @@ namespace RatAttack
         static void Main(string[] args)
         {
             //enstinguished rat populations
-            int[,] entinguishedRatCounts = new int[1025, 1025];
+            int[,] extinguishedRatCounts = new int[1025, 1025];
 
             try
             {
@@ -65,7 +65,7 @@ namespace RatAttack
                         for (int j = minPositionX; j <= maxPositionX; j++)
                         {
                             for (int k = minPositionY; k <= maxPositionY; k++)
-                                entinguishedRatCounts[j, k] += populationSize;
+                                extinguishedRatCounts[j, k] += populationSize;
                         }
                     }
 
@@ -79,11 +79,11 @@ namespace RatAttack
                     {
                         for (int m = 0; m < 1025; m++)
                         {
-                            if (extinguishedRatsCount < entinguishedRatCounts[l, m])
+                            if (extinguishedRatsCount < extinguishedRatCounts[l, m])
                             {
                                 chosenY = m;
                                 chosenX = l;
-                                extinguishedRatsCount = entinguishedRatCounts[l, m];
+                                extinguishedRatsCount = extinguishedRatCounts[l, m];
 
                             }
                         }
